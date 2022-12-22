@@ -5,11 +5,15 @@ import {
   Pressable,
   StyleProp, StyleSheet, View, ViewStyle
 } from 'react-native';
-import MapView, { Region } from 'react-native-maps';
+import MapView, { Region, Marker } from 'react-native-maps';
 import { FontAwesome } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
-import { useLocationPermision } from '@app/util/hooks';
+import { useAppDispatch, useLocationPermision } from '@app/util/hooks';
 import { Colors } from '@app/styles';
+import { selectSurroundingChargePoints } from '@app/core/selectors';
+import { poiAsyncActions } from '@app/core/store/poi';
+
 
 
 type Props = {
@@ -17,6 +21,8 @@ type Props = {
   mapStyles?: StyleProp<ViewStyle>;
 }
 export const Map: VFC<Props> = ({ containerStyles, mapStyles }) => {
+  const dispatch = useAppDispatch();
+  const chargePoints = useSelector(selectSurroundingChargePoints);
   const { hasPerm, renderRequester, getLocation } = useLocationPermision();
   const [region, setRegion] = useState<undefined | Region>(undefined);
   const composedContainer = StyleSheet.compose<ViewStyle>(
@@ -31,15 +37,19 @@ export const Map: VFC<Props> = ({ containerStyles, mapStyles }) => {
 
   const onSetRegion = useCallback(async () => {
     const location = await getLocation();
-
+    const { latitude, longitude } = location.coords;
     setRegion({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
+      latitude,
+      longitude,
       latitudeDelta: 0.5,
       longitudeDelta: 0.5,
     });
 
-  }, [getLocation]);
+    await dispatch(poiAsyncActions.fetchGetChargePois({
+      latitude,
+      longitude,
+    }));
+  }, [getLocation, dispatch]);
 
   const onArrowPress = useCallback(() => {
     void onSetRegion();
@@ -58,7 +68,23 @@ export const Map: VFC<Props> = ({ containerStyles, mapStyles }) => {
       <MapView
         region={ region }
         style={ composedMap }
-      />
+      >
+        {chargePoints.map(({ ID, AddressInfo }) => (
+          <Marker
+            icon={{
+              uri: '../../../assets/images/ev-marker.png',
+              height: 10,
+              width: 10,
+            }}
+            key={ ID }
+            coordinate={{
+              latitude: AddressInfo.Latitude,
+              longitude: AddressInfo.Longitude,
+            }}
+            title={ AddressInfo.Title }
+          />
+        ))}
+      </MapView>
       <Pressable
         style={ styles.arrow }
         onPress={ onArrowPress }

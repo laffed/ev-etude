@@ -1,4 +1,5 @@
 import type { BarState } from './bar';
+import { PoiState } from './poi';
 
 
 export type ApplicationState = {
@@ -6,4 +7,5 @@ export type ApplicationState = {
     rehydrated?: boolean;
   }
   bar: BarState;
+  poi: PoiState;
 }

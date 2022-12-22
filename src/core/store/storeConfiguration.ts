@@ -12,6 +12,7 @@ import {
 } from 'redux-persist';
 
 import { barReducer } from './bar';
+import { poiReducer } from './poi';
 
 
 const persistConfig = {
@@ -22,6 +23,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   bar: barReducer,
+  poi: poiReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

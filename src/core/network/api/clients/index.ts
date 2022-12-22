@@ -1,1 +1,1 @@
-export { nestClient, nestClientAuth } from './nestClient';
+export { openChargeMapClient } from './openChargeMap';
