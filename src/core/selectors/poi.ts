@@ -10,3 +10,8 @@ export const selectSurroundingChargePoints = createSelector(
   selectPoi,
   (poi) => poi.points
 );
+
+export const selectSelectedCharger = createSelector(
+  selectPoi,
+  (poi) => poi.selectedPoi
+);

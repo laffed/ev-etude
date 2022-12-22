@@ -1,5 +1,6 @@
 export type PoiState = {
   points: PoiData[];
+  selectedPoi: PoiData | null;
 }
 
 

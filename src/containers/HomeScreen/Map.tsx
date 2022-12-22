@@ -71,11 +71,6 @@ export const Map: VFC<Props> = ({ containerStyles, mapStyles }) => {
       >
         {chargePoints.map(({ ID, AddressInfo }) => (
           <Marker
-            icon={{
-              uri: '../../../assets/images/ev-marker.png',
-              height: 10,
-              width: 10,
-            }}
             key={ ID }
             coordinate={{
               latitude: AddressInfo.Latitude,
