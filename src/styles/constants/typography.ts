@@ -10,6 +10,8 @@ export const Typographies = {
     fontFamily: Fonts.MONT_BOLD,
   },
   HEADER_1: {
+    fontSize: 20,
+    fontWeight: '700',
     color: Colors.BLACK,
   },
   HEADER_2: {

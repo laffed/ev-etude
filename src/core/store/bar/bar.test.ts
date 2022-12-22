@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-/* eslint-disable jest/no-commented-out-tests */
+
 import { AnyAction } from 'redux';
 
 import { ThunkStatus } from '@app/core/types';
@@ -11,6 +11,7 @@ import { barInitialState } from './bar.slice';
 import { barReducer } from './index';
 
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- dummy slice test
 const EmptyAction = {} as unknown as AnyAction;
 
 describe('bar slice', () => {
@@ -32,8 +33,4 @@ describe('bar slice', () => {
 
   });
 
-  // TODO
-  // it.todo('fetchGetBuzzTest pending');
-  // it.todo('fetchGetBuzzTest pending');
-  // it.todo('fetchGetBuzzTest pending');
 });
