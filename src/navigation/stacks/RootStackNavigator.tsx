@@ -2,7 +2,7 @@ import { VFC } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-import { MenuModal } from '@containers/index';
+import { ChargerModal } from '@containers/index';
 
 import { RootNavigatorParamsList } from '../types';
 import { ModalRoutes, RootNavigatorRoutes } from '../routes';
@@ -25,8 +25,11 @@ export const RootStackNavigator: VFC = () => {
         component={ TabStackNavigator }
       />
       <Screen
-        name={ ModalRoutes.MENU }
-        component={ MenuModal }
+        name={ ModalRoutes.CHARGER }
+        component={ ChargerModal }
+        options={{
+          presentation: 'modal',
+        }}
       />
     </Navigator>
   );

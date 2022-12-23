@@ -1,4 +1,4 @@
-export { barActions, barAsyncActions } from './bar';
+export { poiActions, poiAsyncActions } from './poi';
 
 
 

@@ -8,7 +8,7 @@ import { useNavigationDevTools } from '../useNavigationDevTools';
 
 
 jest.mock('@react-navigation/devtools');
-jest.mock('lodash');
+jest.mock('lodash/noop');
 
 const mockUseReduxDevToolsExtension = useReduxDevToolsExtension as jest.MockedFunction<
   typeof useReduxDevToolsExtension

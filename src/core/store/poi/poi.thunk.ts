@@ -11,7 +11,7 @@ import { selectSelectedCharger } from '@app/core/selectors';
 
 export const fetchGetChargePois = createAsyncThunk<
   GetPoiListRes,
-  {latitude: number; longitude: number},
+  {latitude: number; longitude: number, distance: number},
   RejectWith<string>
 >(
   'poi/getChargePoints',
@@ -37,7 +37,9 @@ export const fetchPostSelectCharger = createAsyncThunk<
     try {
       const selectedCharger = selectSelectedCharger(getState());
       if (selectedCharger === null) {
-        return rejectWithValue('Could not find selected charger');
+        rejectWithValue('Could not find selected charger');
+
+        return undefined;
       }
 
       const DUMMY_PAYLOAD = {
@@ -46,12 +48,14 @@ export const fetchPostSelectCharger = createAsyncThunk<
         charger_id: selectedCharger.ID, // TODO verify if this is the correct id (or Connections[number].id)
       };
 
-      const res = await postSelectCharger(DUMMY_PAYLOAD);
+      await postSelectCharger(DUMMY_PAYLOAD);
 
-      return res.data;
+      return undefined;
     } catch (err) {
 
-      return rejectWithValue('Unknown error');
+      rejectWithValue('Unknown error');
+
+      return undefined;
     }
   }
 );

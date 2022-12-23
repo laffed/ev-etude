@@ -1,5 +1,5 @@
 export { ResponseError } from './responseError';
 export {
-  nestClient,
-  nestClientAuth
+  evEnergyClient,
+  openChargeMapClient
 } from './clients';

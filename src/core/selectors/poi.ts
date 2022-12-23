@@ -15,3 +15,8 @@ export const selectSelectedCharger = createSelector(
   selectPoi,
   (poi) => poi.selectedPoi
 );
+
+export const selectChargingStatus = createSelector(
+  selectPoi,
+  (poi) => poi.chargingStatus
+);

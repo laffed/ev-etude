@@ -8,5 +8,6 @@ export enum TabRoutes {
 }
 
 export enum ModalRoutes {
-  MENU = 'MENU'
+  MENU = 'MENU',
+  CHARGER = 'CHARGER'
 }
