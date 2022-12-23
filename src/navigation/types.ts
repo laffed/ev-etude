@@ -23,6 +23,7 @@ export type RootStackScreenProp<T extends keyof RootNavigatorParamsList> =
 
 export type ModalScreenParamsList = {
   [ModalRoutes.MENU]: undefined;
+  [ModalRoutes.CHARGER]: undefined;
 }
 
 /** TAB STACK SCOPE */

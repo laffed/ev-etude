@@ -6,17 +6,18 @@ import { openChargeMapClient } from '../api/clients';
 type Params = {
   latitude: number;
   longitude: number;
+  distance: number;
 }
 
 export type GetPoiListRes = PoiData[];
-export const getPoiList = ({ latitude, longitude }: Params) => {
+export const getPoiList = ({ latitude, longitude, distance }: Params) => {
 
   return openChargeMapClient.get<GetPoiListRes>('/poi?key=123', {
     params: {
       compact: true,
       latitude,
       longitude,
-      distance: 3,
+      distance,
       verbose: false,
     },
   });

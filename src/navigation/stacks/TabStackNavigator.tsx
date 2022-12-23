@@ -1,8 +1,18 @@
-import { VFC } from 'react';
+import {
+  useCallback, useEffect, VFC
+} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import {
+  SimpleLineIcons
+  , Octicons
+} from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 import { HomeScreen, ProfileScreen } from '@containers/index';
+import { useToast } from '@app/util/hooks';
+import { selectChargingStatus } from '@app/core/selectors';
+
+
 
 import { RootStackScreenProp, TabNavigatorParamsList } from '../types';
 import { RootNavigatorRoutes, TabRoutes } from '../routes';
@@ -11,12 +21,29 @@ import { RootNavigatorRoutes, TabRoutes } from '../routes';
 const { Navigator, Screen } = createBottomTabNavigator<TabNavigatorParamsList>();
 
 export const TabStackNavigator: VFC<RootStackScreenProp<RootNavigatorRoutes.TAB_STACK>> = () => {
+  const chargingStatus = useSelector(selectChargingStatus);
+  const { showToast } = useToast();
+
+  const onStatusChange = useCallback((status: typeof chargingStatus) => {
+    if (status === 'charging') {
+      showToast({
+        text: 'Charging started!',
+      });
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    onStatusChange(chargingStatus);
+  }, [chargingStatus, onStatusChange]);
+
+
   return (
     <Navigator
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
+        tabBarShowLabel: false,
       }}
     >
       <Screen
@@ -24,9 +51,9 @@ export const TabStackNavigator: VFC<RootStackScreenProp<RootNavigatorRoutes.TAB_
         component={ HomeScreen }
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='home-outline'
-              size={ 20 }
+            <SimpleLineIcons
+              name="globe"
+              size={ 24 }
               color={ color }
             />
           ),
@@ -37,9 +64,9 @@ export const TabStackNavigator: VFC<RootStackScreenProp<RootNavigatorRoutes.TAB_
         component={ ProfileScreen }
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons
-              name='person-outline'
-              size={ 20 }
+            <Octicons
+              name="plug"
+              size={ 24 }
               color={ color }
             />
           ),

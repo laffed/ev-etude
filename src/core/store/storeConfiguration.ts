@@ -11,22 +11,25 @@ import {
   REGISTER
 } from 'redux-persist';
 
-import { barReducer } from './bar';
 import { poiReducer } from './poi';
 
 
-const persistConfig = {
-  key: 'root',
-  version: 1,
+const poiPersistConfig = {
+  key: 'poi',
   storage: AsyncStorage,
+  blacklist: ['points', 'chargingStatus'],
 };
 
 const rootReducer = combineReducers({
-  bar: barReducer,
-  poi: poiReducer,
+  poi: persistReducer(poiPersistConfig, poiReducer),
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer({
+  key: 'root',
+  version: 1,
+  storage: AsyncStorage,
+  blacklist: ['poi'],
+}, rootReducer);
 
 const createStore = () => {
   const store = configureStore({

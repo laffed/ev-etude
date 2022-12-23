@@ -1,3 +1,8 @@
+import type { AppDispatch } from '../store/storeConfiguration';
+
+import type { ApplicationState } from './application';
+
+
 export enum ThunkStatus {
   IDLE = 'IDLE',
   PENDING = 'PENDING',
@@ -12,7 +17,12 @@ export type SliceMeta = {
   }
 }
 
-export type RejectWith<T> = {
+type ThunkConfig = {
+  state: ApplicationState;
+  dispatch: AppDispatch;
+}
+export type RejectWith<T> = ThunkConfig & {
   rejectValue: T
 }
+
 
