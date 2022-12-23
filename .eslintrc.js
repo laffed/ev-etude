@@ -124,6 +124,7 @@ module.exports = {
     'import/no-unresolved': 2,
     'import/newline-after-import': [2, { 'count': 2 }],
     'import/namespace': [2, { 'allowComputed': true }],
+    "react/prop-types": 0, 
     'react/react-in-jsx-scope': 'off',
     'react/self-closing-comp': [2, {
       'component': true,

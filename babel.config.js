@@ -34,6 +34,7 @@ module.exports = function (api) {
             '@styles': './src/styles',
             '@hooks': './src/util/hooks',
             '@methods': './src/util/methods',
+            '@ts-util': './src/util/types/index',
             '@network': './src/core/network',
             '@selectors': './src/core/selectors',
             '@actions': './src/core/store/index',

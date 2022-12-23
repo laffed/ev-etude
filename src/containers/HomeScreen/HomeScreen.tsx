@@ -1,35 +1,27 @@
-import { VFC } from 'react';
-import { View, Button, Text } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useCallback, VFC } from 'react';
 
-import { useAppDispatch } from '@hooks/index';
-import { barAsyncActions } from '@actions';
-import { TabStackScreenProp, TabRoutes } from '@navigation/index';
-import { selectBuzz, selectBarTestUser } from '@app/core/selectors';
+import {
+  TabStackScreenProp, TabRoutes, ModalRoutes
+} from '@navigation/index';
+import { SafeScreen } from '@app/components';
+import { useAppDispatch } from '@app/util/hooks';
+import { poiActions } from '@app/core/store';
+import { PoiData } from '@app/core/types';
+
+import { Map } from './Map';
 
 
-export const HomeScreen: VFC<TabStackScreenProp<TabRoutes.HOME>> = () => {
+export const HomeScreen: VFC<TabStackScreenProp<TabRoutes.HOME>> = ({ navigation }) => {
   const dispatch = useAppDispatch();
-  const bar = useSelector(selectBuzz);
-  const user = useSelector(selectBarTestUser);
-  const onPress = () => {
-    void dispatch(barAsyncActions.fetchGetBarTestUser(2));
-  };
+  const onSelectPoi = useCallback((poi: PoiData) => {
+    dispatch(poiActions.setChargingStatus('idle'));
+    dispatch(poiActions.setSelectedPoi(poi));
+    navigation.push(ModalRoutes.CHARGER);
+  }, [dispatch, navigation]);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-      <Text>
-        {bar}
-      </Text>
-      {!!user && (
-        <Text>
-          {user.email}
-        </Text>
-      )}
-      <Button
-        title='Press'
-        onPress={ onPress }
-      />
-    </View>
+    <SafeScreen>
+      <Map onSelectPoi={ onSelectPoi } />
+    </SafeScreen>
   );
 };
